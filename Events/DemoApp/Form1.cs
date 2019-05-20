@@ -14,17 +14,23 @@ namespace DemoApp
 {
     public partial class Form1 : Form
     {
+        // Flight amount
         private readonly int amountOfFlights = 50;
 
+        // Variables
         protected ControlTower controlTower;
         protected Terminal terminal;
 
         protected List<Flight> flights;
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public Form1()
         {
             InitializeComponent();
 
+            // Initiate standard variables
             flights = new List<Flight>();
 
             controlTower = new ControlTower();
@@ -35,7 +41,8 @@ namespace DemoApp
             terminal.Number = 23;
             terminal.OnFlightsUpdated += UpdateFlights;
 
-            for (int i = 0; i < amountOfFlights; i++)
+            // Create flights
+            for (int i = 1; i <= amountOfFlights; i++)
             {
                 // Create flights
                 Flight f = new Flight();
@@ -55,16 +62,23 @@ namespace DemoApp
 
         private void btnDelay_Click(object sender, EventArgs e)
         {
+            // Check if item selected
             if(!(lbFlights.SelectedItem is null))
             {
+                // Find first flight with same name
                 Flight flight = flights.FirstOrDefault(f => f.Name == ((Flight)lbFlights.SelectedItem).Name);
+                
+                // Delay flight by 5 hours
                 flight.Delay(5);
             }
         }
 
         private void UpdateFlights(object sender, EventArgs e)
         {
+            // Clear items in listbox
             lbFlights.Items.Clear();
+            // Fill listbox again in descending order by arrival date
+            // This makes sure the last flight comes on top
             foreach(Flight f in flights.OrderByDescending(f => f.Arrival))
             {
                 lbFlights.Items.Add(f);

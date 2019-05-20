@@ -9,9 +9,15 @@ namespace FlightLibrary
         public string Name { get; set; }
         public string Airfield { get; set; }
 
+        /// <summary>
+        /// update flights method used to subscribe to flight events
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void UpdateFlights(object sender, LateArrivalEventArgs e)
         {
-            Console.WriteLine("Plane {0} is {1} hours later!", e.Flight.Name, (e.Actual - e.Planned).TotalHours);
+            // Write to console (Output window)
+            Console.WriteLine("Plane {0} is delayed by {1} hours!", e.Flight.Name, (e.Actual - e.Planned).TotalHours);
         }
 
     }
